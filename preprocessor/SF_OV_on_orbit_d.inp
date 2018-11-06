@@ -1,0 +1,163 @@
+C
+C#####################################################################
+C
+HEADER OPTIONS
+    OUTPUT = SF_OV_on_orbit_a.out
+    SAVE   = SF_OV_on_orbit_a.sav
+    USER1  = SF_OV_on_orbit_a.dat
+    QMAP   = SF_OV_on_orbit_a.qmap
+    RSO    = SF_OV_on_orbit_a.restart
+    RSI    = SF_OV_on_orbit_a.restart
+C    DOUBLEPRECISION
+C    MLINE = 100000 $ Limits headers output
+C    MIXARRAY
+C    DIRECTORIES
+C
+C#####################################################################
+C
+HEADER OPERATION DATA
+C
+BUILD CONFIG,OV
+C
+C
+F            CALL STDSTL
+CINCLUDE ./SF_OV_on_orbit_oper_a.dat
+C
+C
+C#####################################################################
+C
+HEADER OUTPUT CALLS, OV
+C      OUTPUT = 0.016667
+ 	CALL QMAP('OV','ALL',1)
+      CALL TPRINT('OV')
+C     CALL GPRINT('OV')
+C 	CALL TMNMX(0,'OV',7,0)
+C
+C#####################################################################
+C
+HEADER CONTROL DATA, GLOBAL
+    abszro = -273.15
+C Stefan-Boltzman Constant (Sigma) = 5.6696E-08 W/m^2/K^4
+    sigma  = 1.0
+    nloops = 200000
+    nloopt = 100000
+C    timeo  = 0.
+C    timend = 0.
+    extlim = 5.
+C    matmet = 2 $ AutoDetermine Single Matrix
+    iterxt = 3
+    ithold = 0
+    dtmpca = 50.
+C    outptf = 0.
+    ithldf = 0
+    rssizf = 0.1
+C   rebalf = 0.1
+    rebalf = 0.01
+C   rsmaxf = 0.1
+    rsmaxf = 0.02
+
+    UID =    SI
+
+    TIMEO = 5000.0
+    TIMEND = 5000.0
+C
+C
+C
+C#####################################################################
+C
+CHEADER USER DATA, GLOBAL
+C
+C
+CINCLUDE ./SF_OV_on_orbit_const_a.dat
+C
+C
+C#####################################################################
+C
+CHEADER OPTIONS
+C    SINDA Data generated with Thermal Desktop 4.7 Patch 16
+C    Generated on Thu Sep 08 15:33:12 2005
+C    TDUNITS,   Energy   =    BTU
+C    TDUNITS,   Time     =    hr
+C    TDUNITS,   Temp     =    F
+C    TDUNITS,   Mass     =    lbm
+C    TDUNITS,   Length   =    ft
+C    TDUNITS,   Orbit    =    nm
+C    TDUNITS,   Pressure =    psi
+C    Symbol names, values, comments
+C
+C
+C#########################################################################
+C
+HEADER NODE DATA,OV
+C
+C
+INCLUDE ./SF_OV_on_orbit_node_a.inp
+C
+C
+C#####################################################################
+C
+CHEADER VARIABLES 0, OV
+C
+CINCLUDE ./SF_OV_on_orbit_source_a.inp
+C
+C
+C#####################################################################
+C
+HEADER VARIABLES 1, OV
+C
+INCLUDE ./SF_OV_on_orbit_varb1_a.inp
+C
+C
+C#########################################################################
+C
+HEADER CONDUCTOR DATA,OV
+C
+C
+INCLUDE ./SF_OV_on_orbit_cond_a.inp
+C
+C
+C#########################################################################
+C
+C
+HEADER ARRAY DATA, OV
+C
+INCLUDE ./SF_OV_on_orbit_array_a.inp
+C
+C
+C
+C#########################################################################
+C
+C
+CHEADER CARRAY DATA, OV
+C
+CINCLUDE ./SF_OV_on_orbit_carray_a.inp
+C
+C
+C
+C#########################################################################
+C
+HEADER SUBROUTINE
+C
+CINCLUDE ./SF_OV_on_orbit_subroutine_a.inp
+C
+      SUBROUTINE TDHTR
+C     This routine is to hold heaters at their midpoint temps
+C     for steady state solutions.
+      RETURN
+      END
+      SUBROUTINE TDREL
+C     This routine is to release heaters for transient runs
+C     for steady state solutions.
+F     RETURN
+F     END
+F     SUBROUTINE TDHTOT
+C     This routine prints out heater ontime and cycle summaries
+F     RETURN
+F     END
+F     SUBROUTINE TDHTRST
+C     This routine resets heater statistics
+F     RETURN
+F     END
+C
+C#########################################################################
+C
